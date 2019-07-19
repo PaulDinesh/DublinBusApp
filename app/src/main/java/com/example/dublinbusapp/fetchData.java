@@ -19,21 +19,39 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class fetchData extends AsyncTask<Void,Void,Void> {
     String data ="";
-    String dataParse = "";
-    String singleParse="";
+    String dataParsed = "\n\n\nRoute\t Destination\t duetime \n";
+    String singleParsed="";
     String stopid = null;
+    String searchterm=MainActivity.search.getText().toString();
+    String arrivaldatetime;
+    String duetime;
+    String departuredatetime;
+    String departureduetime;
+    String scheduledarrivaldatetime;
+    String scheduleddeparturedatetime;
+    String destination;
+    String destinationlocalized;
+    String origin;
+    String originlocalized;
+    String direction;
+    String operator;
+    String additionalinformation;
+    String lowfloorstatus;
+    String route;
+    String sourcetimestamp;
+    String monitored;
+
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            //URL url= new URL("https://data.smartdublin.ie/cgi-bin/rtpi/realtimebusinformation?stopid=7602&format=json");
-            //URL url= new URL("http://api.myjson.com/bins/j5f6b");
-            URL url = new URL("https://api.myjson.com/bins/96k67");
+
+System.out.println("help......"+searchterm);
+            URL url= new URL("https://data.smartdublin.ie/cgi-bin/rtpi/realtimebusinformation?stopid="+searchterm+"&format=json");
+            //URL url = new URL("https://api.myjson.com/bins/96k67");
             HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
             InputStream inputStream = httpsURLConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 //            String jsonStr = sh.makeServiceCall(url);
-
-
             String line = "";
             while (line != null) {
                 line = bufferedReader.readLine();
@@ -50,90 +68,35 @@ public class fetchData extends AsyncTask<Void,Void,Void> {
                 JSONObject jb1 = jr.getJSONObject(i);
 
                 try {
-                    //stopid = jb1.getString("stopid");
 
-                    //  String timestamp = jb1.getString("timestamp");
-                    String arrivaldatetime = jb1.getString("arrivaldatetime");
-                    String duetime = jb1.getString("duetime");
-                    String departuredatetime = jb1.getString("departuredatetime");
-                    String departureduetime = jb1.getString("departureduetime");
-                    String scheduledarrivaldatetime = jb1.getString("scheduledarrivaldatetime");
-                    String scheduleddeparturedatetime = jb1.getString("scheduleddeparturedatetime");
-                    String destination = jb1.getString("destination");
-                    String destinationlocalized = jb1.getString("destinationlocalized");
-                    String origin = jb1.getString("origin");
-                    String originlocalized = jb1.getString("originlocalized");
-                    String direction = jb1.getString("direction");
-                    String operator = jb1.getString("operator");
-                    String additionalinformation = jb1.getString("additionalinformation");
-                    String lowfloorstatus = jb1.getString("lowfloorstatus");
-                    String route = jb1.getString("route");
-                    String sourcetimestamp = jb1.getString("sourcetimestamp");
-                    String monitored = jb1.getString("monitored");
-                    Log.i(".......\nstopid  ", stopid +
-                            "\narrivaldatetime  " + arrivaldatetime +
-                            "\nduetime  " + duetime +
-                            "\ndeparturedatetime  " + departuredatetime +
-                            "\ndepartureduetime  " + departureduetime +
-                            "\nscheduledarrivaldatetime  " + scheduledarrivaldatetime +
-                            "\nscheduleddeparturedatetime  " + scheduleddeparturedatetime +
-                            "\ndestination  " + destination +
-                            "\ndestinationlocalized  " + destinationlocalized +
-                            "\norigin  " + origin +
-                            "\noriginlocalized  " + originlocalized +
-                            "\ndirection  " + direction +
-                            "\noperator  " + operator +
-                            "\nadditionalinformation  " + additionalinformation +
-                            "\nlowfloorstatus  " + lowfloorstatus +
-                            "\nroute  " + route +
-                            "\nsourcetimestamp  " + sourcetimestamp +
-                            "\noperator  " + operator +
-                            "\ndestinationlocalized  " + destinationlocalized +
-                            "\nmonitored  " + monitored);
+                    arrivaldatetime = jb1.getString("arrivaldatetime");
+                    duetime = jb1.getString("duetime"); if (duetime=="Due") {duetime+=" Now";} else {duetime+=" min";};
+                        System.out.println(duetime);
+                     departuredatetime = jb1.getString("departuredatetime");
+                     departureduetime = jb1.getString("departureduetime");
+                    scheduledarrivaldatetime = jb1.getString("scheduledarrivaldatetime");
+                    scheduleddeparturedatetime = jb1.getString("scheduleddeparturedatetime");
+                    destination = jb1.getString("destination");
+                    destinationlocalized = jb1.getString("destinationlocalized");
+                    origin = jb1.getString("origin");
+                    originlocalized = jb1.getString("originlocalized");
+                    direction = jb1.getString("direction");
+                    operator = jb1.getString("operator");
+                    additionalinformation = jb1.getString("additionalinformation");
+                    lowfloorstatus = jb1.getString("lowfloorstatus");
+                    route = jb1.getString("route");
+                    sourcetimestamp = jb1.getString("sourcetimestamp");
+                    monitored = jb1.getString("monitored");
 
+//                    System.out.println(arrivaldatetime);
+
+                    singleParsed = route + "   "+destinationlocalized + "   " +  duetime +"\n";
+                    dataParsed = dataParsed + singleParsed;
+
+//                    Log.i(".......\nstopid  ", stopid +"\narrivaldatetime  " + arrivaldatetime +"\nduetime  " + duetime +"\ndeparturedatetime  " + departuredatetime + "\ndepartureduetime  " + departureduetime + "\nscheduledarrivaldatetime  " + scheduledarrivaldatetime +"\nscheduleddeparturedatetime  " + scheduleddeparturedatetime +"\ndestination  " + destination +"\ndestinationlocalized  " + destinationlocalized +"\norigin  " + origin +"\noriginlocalized  " + originlocalized +"\ndirection  " + direction +"\noperator  " + operator +"\nadditionalinformation  " + additionalinformation +"\nlowfloorstatus  " + lowfloorstatus +"\nroute  " + route +"\nsourcetimestamp  " + sourcetimestamp +"\nmonitored  " + monitored);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                     /*
-                 timestamp"timestamp"
-                 arrivaldatetime"arrivaldatetime"
-                 duetime"duetime"
-                 departuredatetime"departuredatetime"
-                 departureduetime"departureduetime"
-                 scheduledarrivaldatetime"scheduledarrivaldatetime"
-                 scheduleddeparturedatetime"scheduleddeparturedatetime"
-                 destination"destination"
-                 destinationlocalized"destinationlocalized"
-                 origin"origin"
-                 originlocalized"originlocalized"
-                 direction"direction"
-                 operator"operator"
-                 additionalinformation"additionalinformation"
-                 lowfloorstatus"lowfloorstatus"
-                 route"route"
-                 sourcetimestamp"sourcetimestamp"
-                 monitored"monitored"
-            */
-//            for(int i=0;i<JA.length();i++)
-//            {
-//                JSONObject JO = (JSONObject) JA.get(i);
-//                singleParse ="errormessage:" +JO.get("errormessage");
-//                        //"Name:" +JO.get("name")+ "\n"
-//                        /*"Password:" +JO.get("password")+ "\n"+
-//                        "Contact:" +JO.get("contact")+ "\n"+
-//                        "Country:" +JO.get("country")+ "\n";*/
-//                        /*+"\n"+
-//                        "errormessage:" +JO.get("errormessage")+"\n"+
-//                        "numberofresults:" +JO.get("numberofresults")+"\n"+
-//                        "stopid:" +JO.get("stopid")+"\n"+
-//                        "timestamp:" +JO.get("timestamp")+"\n"+
-//                        "results:" +JO.get("results")+"\n"+
-//                        "arrivaldatetime:" +JO.get("arrivaldatetime")+"\n"+
-//                        "duetime:" +JO.get("duetime")
-//                        */
-//                dataParse = String.format("%s%s", dataParse, singleParse);
-//
-//            }
             }
         }
 
@@ -152,6 +115,6 @@ public class fetchData extends AsyncTask<Void,Void,Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        MainActivity.data.setText(this.data);
+        MainActivity.data.setText(this.dataParsed);
     }
 }

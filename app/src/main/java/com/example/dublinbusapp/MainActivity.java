@@ -1,8 +1,13 @@
 package com.example.dublinbusapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognitionService;
+import android.speech.RecognizerIntent;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,8 +16,12 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
     Button click;
+    public static TextInputEditText search;
     public static TextView data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +31,45 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         click = findViewById(R.id.button);
         data = (TextView) findViewById(R.id.fetcheddata);
+search=findViewById(R.id.as);
+//        click.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                fetchData process = new fetchData();
+//                process.execute();
+//            }
+//        });
+
 
         click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fetchData process = new fetchData();
-                process.execute();
+
+                Intent vc=new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                vc.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                vc.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.ENGLISH);
+                startActivityForResult(vc,100);
             }
         });
 
-    }}
+    }
+
+    @Override
+    protected void onActivityResult( int requestcode,int resultCode,@Nullable Intent data){
+super.onActivityResult(requestcode,resultCode,data);
+
+switch (requestcode){
+    case 100:{
+        if(resultCode==RESULT_OK&&null!=data){
+            ArrayList<String> result=data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            search.setText(result.get(0));
+            fetchData process = new fetchData();
+                process.execute();
+        }
+        break;
+    }
+}
+
+
+    }
+}
