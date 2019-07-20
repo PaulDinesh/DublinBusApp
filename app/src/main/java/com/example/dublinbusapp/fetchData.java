@@ -21,6 +21,7 @@ public class fetchData extends AsyncTask<Void,Void,Void> {
     String data ="";
     String dataParsed = "\n\n\nRoute\t Destination\t duetime \n";
     String singleParsed="";
+    String errorcode;
     String stopid = null;
     String searchterm=MainActivity.search.getText().toString();
     String arrivaldatetime;
@@ -57,6 +58,7 @@ System.out.println("help......"+searchterm);
                 line = bufferedReader.readLine();
                 data = data + line;
             }
+//            if (data==null){ dataParsed="No buses currently at the moment";}
 //            data = String.format("%s%s", data, line);}
 
             JSONObject JA = new JSONObject(data);
@@ -64,7 +66,11 @@ System.out.println("help......"+searchterm);
             System.out.println(jr);
             stopid = (String) JA.getString("stopid");
             String timestamp = JA.getString("timestamp");
+            errorcode=(String) JA.getString("errorcode");
             for (int i = 0; i < jr.length(); i++) {
+//                if (errorcode!="0"){ dataParsed="No buses currently at the moment";break;}
+//                else {
+
                 JSONObject jb1 = jr.getJSONObject(i);
 
                 try {

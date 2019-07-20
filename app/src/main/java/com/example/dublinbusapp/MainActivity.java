@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    Button click;
+    Button click,clicksearch;
     public static TextInputEditText search;
     public static TextView data;
     @Override
@@ -30,15 +30,16 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         click = findViewById(R.id.button);
+        clicksearch = findViewById(R.id.search_btn);
         data = (TextView) findViewById(R.id.fetcheddata);
 search=findViewById(R.id.as);
-//        click.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                fetchData process = new fetchData();
-//                process.execute();
-//            }
-//        });
+        clicksearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fetchData process = new fetchData();
+                process.execute();
+            }
+        });
 
 
         click.setOnClickListener(new View.OnClickListener() {
