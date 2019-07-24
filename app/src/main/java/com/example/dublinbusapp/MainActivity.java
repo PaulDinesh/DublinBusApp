@@ -13,6 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -23,10 +26,17 @@ public class MainActivity extends AppCompatActivity {
     Button click,clicksearch;
     public static TextInputEditText search;
     public static TextView data;
+    private WebView mywebView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mywebView = (WebView)findViewById(R.id.webView);
+        WebSettings webSettings= mywebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
+        mywebView.loadUrl("https://www.dublinbus.ie/Contact-Us1/Customer-Comment-Form/");
+        mywebView.setWebViewClient(new WebViewClient());
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         click = findViewById(R.id.button);
@@ -39,8 +49,15 @@ search=findViewById(R.id.as);
                 fetchData process = new fetchData();
                 process.execute();
             }
+
         });
         //comment//
+
+
+
+
+
+
 
 
         click.setOnClickListener(new View.OnClickListener() {
