@@ -72,7 +72,17 @@ search=findViewById(R.id.as);
         });
 
     }
+    @Override
+    public void onBackPressed()
+    {
+        if (mywebView.canGoBack()){
+            mywebView.goBack();
+        }
+        else {
+            super.onBackPressed();
+        }
 
+    }
     @Override
     protected void onActivityResult( int requestcode,int resultCode,@Nullable Intent data){
 super.onActivityResult(requestcode,resultCode,data);
