@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "707287833320",
+    "firebase_url": "https://dublinbus-kkkiuq.firebaseio.com",
+    "project_id": "dublinbus-kkkiuq",
+    "storage_bucket": "dublinbus-kkkiuq.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:707287833320:android:7344d247b51c6f3f",
+        "android_client_info": {
+          "package_name": "com.example.dublinbusapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "707287833320-vn6hou665747ukmob9ovca0j4e569em4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dublinbusapp",
+            "certificate_hash": "b75621b135032425fb02f74859c1104a835d30fd"
+          }
+        },
+        {
+          "client_id": "707287833320-1oa3lkv075j4lgnpu17pro6dcvo3injj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2tTvqhoh11kspvvD8Tj9dia5Vx1J8D1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "707287833320-1oa3lkv075j4lgnpu17pro6dcvo3injj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
