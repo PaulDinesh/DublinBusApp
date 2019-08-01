@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity2">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="577dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="133dp"
+        android:layout_marginEnd="-2dp">
+
+        <TextView
+            android:id="@+id/Stopdata"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/Stopdata"
+            android:hint="Results Displayed here!!!"
+            android:padding="5dp"
+            android:textSize="24sp" />
+    </ScrollView>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_search_term"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="74dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="15"
+        app:errorEnabled="true">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/as"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:hint="SearchTerm"
+            android:inputType="text" />
+
+
+    </android.support.design.widget.TextInputLayout>
+
+</RelativeLayout>

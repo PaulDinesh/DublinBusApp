@@ -107,16 +107,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                Intent intent = new Intent(MainActivity.this, ViewDatabase.class);
             }});
-    }
+
 
 btnStopInfo.setOnClickListener(new View.OnClickListener(){
         @Override
                 public void onClick(View v){
             openActivity2();
+            BusStopInformation processdata = new BusStopInformation();
+            processdata.execute();
         }
 });
 
-
+    }
+    public void openActivity2(){
+        Intent intent = new Intent(MainActivity.this, Activity2.class);
+        startActivity(intent);
+    }
 
     public void readfromDatabase(){// Read from the database
         database.addValueEventListener(new ValueEventListener() {
