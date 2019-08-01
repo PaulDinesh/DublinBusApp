@@ -1,6 +1,7 @@
 package com.example.dublinbusapp;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.speech.RecognitionService;
 import android.speech.RecognizerIntent;
@@ -23,12 +24,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    Button click,clicksearch,btnfirebase;
+    Button click,clicksearch,btnfirebase,btnStopInfo;
     public static TextInputEditText search;
     public static TextView data;
 //    DatabaseReference myRef;
@@ -48,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         click = findViewById(R.id.button);
         clicksearch = findViewById(R.id.search_btn);
         btnfirebase=findViewById(R.id.firebase);
+        btnStopInfo=findViewById(R.id.StopInfo);
         data = (TextView) findViewById(R.id.fetcheddata);
         search=findViewById(R.id.as);
         clicksearch.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +63,33 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 fetchData process = new fetchData();
                 process.execute();
+
+                //read & parse json
+                Resources res = getResources();
+                InputStream is = ((Resources) res).openRawResource(R.raw.bus_stop);
+                Scanner scanner = new Scanner(is);
+                StringBuilder builder = new StringBuilder();
+
+                while(scanner.hasNextLine()){
+//                    String line =builder.append(scanner.nextLine());
+                    }
+                System.out.println(builder);
+                //parse json
+                StringBuilder builder1 = new StringBuilder();
+                try{
+                    JSONObject root = new JSONObject("");
+
+                    JSONObject BusStop = root.getJSONObject("");
+
+                    JSONArray stop = BusStop.getJSONArray("");
+                    for(int i=0;i<stop.length();i++){
+                        JSONArray stop1 = stop.getJSONArray(i);
+                    }
+
+                }
+                catch(JSONException e){
+                    e.printStackTrace();
+                }
             }
         });
         click.setOnClickListener(new View.OnClickListener() {
@@ -73,13 +108,23 @@ public class MainActivity extends AppCompatActivity {
 //                Intent intent = new Intent(MainActivity.this, ViewDatabase.class);
             }});
     }
+
+btnStopInfo.setOnClickListener(new View.OnClickListener(){
+        @Override
+                public void onClick(View v){
+            openActivity2();
+        }
+});
+
+
+
     public void readfromDatabase(){// Read from the database
         database.addValueEventListener(new ValueEventListener() {
 //            database.orderByChild("PlateCode").equalTo("339072").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 //                String childvalue = String.valueOf(dataSnapshot.child("PlateCode").getValue());
-                showData(dataSnapshot);
+//             showData(dataSnapshot);
 //                Log.d("paul", "Value is: " + childvalue);
 //                String childvalue1 = String.valueOf(dataSnapshot.getValue());
 //
