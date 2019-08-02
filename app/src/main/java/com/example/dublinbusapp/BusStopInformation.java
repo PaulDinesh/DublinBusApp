@@ -15,16 +15,17 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class BusStopInformation extends AsyncTask<Void,Void,Void> {
+public class BusStopInformation extends AsyncTask<Void, Void, Void> {
     String data_StopInfo ="";
-    String dataParsed_StopInfo = "\n\n\nRoute\t Destination\t duetime \n";
-    String singleParsed_StopInfo="";
+    String[] dataParsed_StopInfo={"",""};
+    String[] singleParsed_StopInfo={"",""};
     String errorcode;
     String errormessage;
     String numberofresults;
     String timestamp;
+    int count=0;
 
-    String searchterm=MainActivity.search.getText().toString();
+    String[] stopnameArray={"",""};
 
     String stopid = null;
     String displaystopid;
@@ -40,68 +41,81 @@ public class BusStopInformation extends AsyncTask<Void,Void,Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        try{
-            URL url= new URL("https://data.smartdublin.ie/cgi-bin/rtpi/busstopinformation?stopid="+searchterm+"&format=json");
-        HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
-        InputStream inputStream = httpsURLConnection.getInputStream();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        while (line != null) {
-            line = bufferedReader.readLine();
-            data_StopInfo = data_StopInfo + line;
-        }
-        JSONObject JA = new JSONObject(data_StopInfo);
-            errorcode=(String) JA.getString("errorcode");
-            errormessage = JA.getString("errormessage");
-            numberofresults = JA.getString("numberofresults");
-            timestamp = JA.getString("timestamp");
 
-        JSONArray jr = JA.getJSONArray("results");
-        for (int i = 0; i < jr.length(); i++) {
-            JSONObject jb1 = jr.getJSONObject(i);
+        stopnameArray[0] = MainActivity.startstopname.getText().toString();
+        stopnameArray[1] = MainActivity.endstopname.getText().toString();
+
+        for (int i = 0; i < stopnameArray.length; i++) {
             try {
-                stopid = jb1.getString("stopid");
-                displaystopid = jb1.getString("displaystopid");
+                URL url = new URL("https://data.smartdublin.ie/cgi-bin/rtpi/busstopinformation?stopid=&stopname=" + stopnameArray[i] + "&format=json");
+//            https://data.smartdublin.ie/cgi-bin/rtpi/busstopinformation?stopid=&stopname=Jamestown%20Rd&format=json
+                HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
+                InputStream inputStream = httpsURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String line = "";
+                while (line != null) {
+                    line = bufferedReader.readLine();
+                    data_StopInfo = data_StopInfo + line;
+                }
+                JSONObject JA = new JSONObject(data_StopInfo);
+                errorcode = (String) JA.getString("errorcode");
+                errormessage = JA.getString("errormessage");
+                numberofresults = JA.getString("numberofresults");
+                timestamp = JA.getString("timestamp");
 
-                shortname = jb1.getString("shortname");
-                shortnamelocalized = jb1.getString("shortnamelocalized");
-                fullname = jb1.getString("fullname");
-                fullnamelocalized = jb1.getString("fullnamelocalized");
-                latitude = jb1.getString("latitude");
-                longitude = jb1.getString("longitude");
-                lastupdated = jb1.getString("lastupdated");
+                JSONArray jr = JA.getJSONArray("results");
+                for (int j = 0; j < jr.length(); j++) {
+                    JSONObject jb1 = jr.getJSONObject(j);
+                    try {
+                        stopid = jb1.getString("stopid");
+                        displaystopid = jb1.getString("displaystopid");
+                        shortname = jb1.getString("shortname");
+                        shortnamelocalized = jb1.getString("shortnamelocalized");
+                        fullname = jb1.getString("fullname");
+                        fullnamelocalized = jb1.getString("fullnamelocalized");
+                        latitude = jb1.getString("latitude");
+                        longitude = jb1.getString("longitude");
+                        lastupdated = jb1.getString("lastupdated");
 
+                        singleParsed_StopInfo[i] = shortname + "   " + fullname + "\n";
+                        dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
 
-                   singleParsed_StopInfo = shortname + "   " +  fullname +"\n";
-                dataParsed_StopInfo = dataParsed_StopInfo + singleParsed_StopInfo;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                JSONArray jar = JA.getJSONArray("operators");
+                for (int k = 0; k < jar.length(); k++) {
+                    JSONObject jb1 = jar.getJSONObject(k);
+                    try {
+                        name = jb1.getString("name");
+                        routes = jb1.getString("routes");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
-            } catch (Exception e) {
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-            JSONArray jar = JA.getJSONArray("operators");
-            for (int i = 0; i < jar.length(); i++) {
-                JSONObject jb1 = jar.getJSONObject(i);
-                try {
-                    name = jb1.getString("name");
-                    routes = jb1.getString("routes");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            return null;
+        }
 
-            }       } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-        return null;
-    }
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        MainActivity.data.setText(this.dataParsed_StopInfo);
+        System.out.println("-------------------------");
+        System.out.println(this.dataParsed_StopInfo[0]);
+        System.out.println("-------------------------");
+        System.out.println(this.dataParsed_StopInfo[1]);
+        System.out.println("-------------------------");
+                Activity2.data.setText(this.dataParsed_StopInfo[0]);
+        Activity2.Endstopdata.setText(this.dataParsed_StopInfo[1]);
+
     }
 }

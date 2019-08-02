@@ -37,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     Button click,clicksearch,btnfirebase,btnStopInfo;
     public static TextInputEditText search;
+    public static TextInputEditText startstopname;
+//    String stopname;
+//    String[] searchstopname1;
+    public static TextInputEditText endstopname;
+
     public static TextView data;
 //    DatabaseReference myRef;
     DatabaseReference database;
@@ -56,40 +61,51 @@ public class MainActivity extends AppCompatActivity {
         clicksearch = findViewById(R.id.search_btn);
         btnfirebase=findViewById(R.id.firebase);
         btnStopInfo=findViewById(R.id.StopInfo);
+
         data = (TextView) findViewById(R.id.fetcheddata);
-        search=findViewById(R.id.as);
+
+        search=findViewById(R.id.text_search);
+
+        startstopname=findViewById(R.id.text_start);
+        endstopname=findViewById(R.id.text_end);
+
+//        Splitting two input stop names
+//        stopname= String.valueOf(searchstopname);
+//        searchstopname1 = stopname.split("to");
+//        System.out.println(searchstopname1);
         clicksearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                openActivity2();
                 fetchData process = new fetchData();
                 process.execute();
 
-                //read & parse json
-                Resources res = getResources();
-                InputStream is = ((Resources) res).openRawResource(R.raw.bus_stop);
-                Scanner scanner = new Scanner(is);
-                StringBuilder builder = new StringBuilder();
-
-                while(scanner.hasNextLine()){
+//                read & parse json
+//                Resources res = getResources();
+//                InputStream is = ((Resources) res).openRawResource(R.raw.bus_stop);
+//                Scanner scanner = new Scanner(is);
+//                StringBuilder builder = new StringBuilder();
+//
+//                while(scanner.hasNextLine()){
 //                    String line =builder.append(scanner.nextLine());
-                    }
-                System.out.println(builder);
-                //parse json
-                StringBuilder builder1 = new StringBuilder();
-                try{
-                    JSONObject root = new JSONObject("");
-
-                    JSONObject BusStop = root.getJSONObject("");
-
-                    JSONArray stop = BusStop.getJSONArray("");
-                    for(int i=0;i<stop.length();i++){
-                        JSONArray stop1 = stop.getJSONArray(i);
-                    }
-
-                }
-                catch(JSONException e){
-                    e.printStackTrace();
-                }
+//                    }
+//                System.out.println(builder);
+//                parse json
+//                StringBuilder builder1 = new StringBuilder();
+//                try{
+//                    JSONObject root = new JSONObject("");
+//
+//                    JSONObject BusStop = root.getJSONObject("");
+//
+//                    JSONArray stop = BusStop.getJSONArray("");
+//                    for(int i=0;i<stop.length();i++){
+//                        JSONArray stop1 = stop.getJSONArray(i);
+//                    }
+//
+//                }
+//                catch(JSONException e){
+//                    e.printStackTrace();
+//                }
             }
         });
         click.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +129,10 @@ btnStopInfo.setOnClickListener(new View.OnClickListener(){
         @Override
                 public void onClick(View v){
             openActivity2();
+//            fetchData process = new fetchData();
+//            process.execute();
+
+
             BusStopInformation processdata = new BusStopInformation();
             processdata.execute();
         }

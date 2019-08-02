@@ -121,6 +121,6 @@ System.out.println("help......"+searchterm);
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        MainActivity.data.setText(this.dataParsed);
+        Activity2.data.setText(this.dataParsed);
     }
 }

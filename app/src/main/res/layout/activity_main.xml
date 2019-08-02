@@ -9,13 +9,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="577dp"
+        android:layout_height="400dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="133dp"
-        android:layout_marginEnd="-2dp">
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="310dp"
+        android:layout_marginEnd="0dp">
 
         <TextView
             android:id="@+id/fetcheddata"
@@ -33,15 +33,6 @@
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="186dp"
-            android:layout_height="match_parent"
-            android:baselineAligned="true"
-            android:ems="10"
-            android:text="DublinBusApp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -53,17 +44,17 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:layout_width="104dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="27dp"
-        android:layout_marginTop="177dp"
+        android:layout_marginStart="281dp"
+        android:layout_marginTop="84dp"
         android:text="Voice-Search" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/text_search_term"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -73,12 +64,59 @@
         app:errorEnabled="true">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/as"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:hint="SearchTerm"
+            android:id="@+id/text_search"
+            android:layout_width="160dp"
+            android:layout_height="48dp"
+            android:layout_alignTop="@+id/text_search_term"
+            android:layout_toEndOf="@+id/text_search_term"
+            android:hint="StopNo"
             android:inputType="text" />
 
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_start_stopname"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="150dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="15"
+        app:errorEnabled="true">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/text_start"
+            android:layout_width="160dp"
+            android:layout_height="51dp"
+            android:layout_alignStart="@+id/text_start_stopname"
+            android:layout_alignTop="@+id/text_search_term"
+            android:layout_alignBottom="@+id/text_start_stopname"
+            android:layout_toEndOf="@+id/text_search_term"
+            android:hint="StartingPoint"
+            android:inputType="text" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_end_stopname"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="200dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="15"
+        app:errorEnabled="true">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/text_end"
+            android:layout_width="160dp"
+            android:layout_height="51dp"
+            android:layout_alignStart="@+id/text_end_stopname"
+            android:layout_alignTop="@+id/text_search_term"
+            android:layout_alignBottom="@+id/text_end_stopname"
+            android:layout_toEndOf="@+id/text_end_stopname"
+            android:hint="Destination"
+            android:inputType="text" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -88,8 +126,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="270dp"
-        android:layout_marginTop="86dp"
+        android:layout_marginStart="179dp"
+        android:layout_marginTop="80dp"
         android:text="Search" />
 
     <Button
@@ -98,8 +136,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="182dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginTop="186dp"
+        android:layout_marginEnd="3dp"
         android:text="firebase" />
 
     <Button
@@ -108,9 +146,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="204dp"
-        android:layout_marginTop="171dp"
-        android:text="StopInfo" />
-
+        android:layout_marginStart="199dp"
+        android:layout_marginTop="213dp"
+        android:text="Search" />
 
 </RelativeLayout>
