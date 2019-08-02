@@ -10,10 +10,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
+
+import static java.lang.System.in;
 
 public class BusStopInformation extends AsyncTask<Void, Void, Void> {
     String data_StopInfo ="";
@@ -23,10 +26,7 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
     String errormessage;
     String numberofresults;
     String timestamp;
-    int count=0;
-
     String[] stopnameArray={"",""};
-
     String stopid = null;
     String displaystopid;
     String shortname;
@@ -37,7 +37,8 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
     String longitude;
     String lastupdated;
     String name;
-    String routes;
+    String[] route_no={"",""};
+
 
     @Override
     protected Void doInBackground(Void... voids) {
@@ -77,24 +78,47 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
                         longitude = jb1.getString("longitude");
                         lastupdated = jb1.getString("lastupdated");
 
-                        singleParsed_StopInfo[i] = shortname + "   " + fullname + "\n";
-                        dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
 
-                    } catch (Exception e) {
+//                        singleParsed_StopInfo[i] = shortname + "   " + fullname + "\n";
+//                        dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
+
+                        String operators =jb1.get("operators").toString();
+                        JSONArray opt=new JSONArray(operators);
+
+                        for (int k = 0; k < opt.length(); k++) {
+                            JSONObject job = opt.getJSONObject(k);
+                            try {
+                                name = job.getString("name");
+
+                                String routes =jb1.get("routes").toString();
+                                JSONArray rt = new JSONArray(routes);
+
+                                for (int l = 0; l < rt.length(); l++) {
+                                    JSONObject jb = rt.getJSONObject(k);
+                                    try {
+                                        route_no[l] = job.getString("routes");
+                                    }
+                                    catch (Exception e) {
+                                        e.printStackTrace();
+
+
+                                    if (routes == routes1)
+                                        singleParsed_StopInfo[i] = routes + "\n";
+                                }
+                                    dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
+//                                    System.out.println("...."+dataParsed_StopInfo[i]);
+
+                            }} catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+
+                    }}
+                    catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-                JSONArray jar = JA.getJSONArray("operators");
-                for (int k = 0; k < jar.length(); k++) {
-                    JSONObject jb1 = jar.getJSONObject(k);
-                    try {
-                        name = jb1.getString("name");
-                        routes = jb1.getString("routes");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
 
-                }
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -109,13 +133,7 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        System.out.println("-------------------------");
-        System.out.println(this.dataParsed_StopInfo[0]);
-        System.out.println("-------------------------");
-        System.out.println(this.dataParsed_StopInfo[1]);
-        System.out.println("-------------------------");
-                Activity2.data.setText(this.dataParsed_StopInfo[0]);
+        Activity2.data.setText(this.dataParsed_StopInfo[0]);
         Activity2.Endstopdata.setText(this.dataParsed_StopInfo[1]);
-
     }
 }
