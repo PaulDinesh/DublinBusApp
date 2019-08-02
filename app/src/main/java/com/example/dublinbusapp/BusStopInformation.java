@@ -38,6 +38,8 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
     String lastupdated;
     String name;
     String[] route_no={"",""};
+    String[] end_route={"",""};
+    String[] start_route={"",""};
 
 
     @Override
@@ -90,25 +92,30 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
                             try {
                                 name = job.getString("name");
 
-                                String routes =jb1.get("routes").toString();
+                                String routes =job.get("routes").toString();
                                 JSONArray rt = new JSONArray(routes);
 
                                 for (int l = 0; l < rt.length(); l++) {
-                                    JSONObject jb = rt.getJSONObject(k);
+                                    JSONObject jb = rt.getJSONObject(l);
                                     try {
-                                        route_no[l] = job.getString("routes");
-                                    }
-                                    catch (Exception e) {
+                                        route_no[l] = jb.getString("routes");
+                                    } catch (Exception e) {
                                         e.printStackTrace();
-
-
-                                    if (routes == routes1)
-                                        singleParsed_StopInfo[i] = routes + "\n";
+                                    }
                                 }
+                                if(i==0) {
+                                    start_route = route_no;
+                                    singleParsed_StopInfo[i] = start_route + "\n";
                                     dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
-//                                    System.out.println("...."+dataParsed_StopInfo[i]);
-
-                            }} catch (Exception e) {
+                                    System.out.println("...." + dataParsed_StopInfo[i]);
+                                }
+                                else {
+                                    end_route = route_no;
+                                    singleParsed_StopInfo[i] = end_route + "\n";
+                                    dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
+                                    System.out.println("...." + dataParsed_StopInfo[i]);
+                                }
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
 
@@ -126,6 +133,12 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+//            if (start_route == end_route)
+//              start_route.retainAll(end_route);
+//                singleParsed_StopInfo[i] = end_route + "\n";
+//            dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
+//            System.out.println("...."+dataParsed_StopInfo[i]);
+
         }
             return null;
         }
