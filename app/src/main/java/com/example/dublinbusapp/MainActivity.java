@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
     Button click,clicksearch,btnfirebase,btnStopInfo;
     public static TextInputEditText search;
     public static TextInputEditText startstopname;
-//    String stopname;
-//    String[] searchstopname1;
     public static TextInputEditText endstopname;
 
     public static TextView data;

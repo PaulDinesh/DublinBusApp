@@ -13,6 +13,8 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -37,7 +39,8 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
     String longitude;
     String lastupdated;
     String name;
-    String[] route_no={"",""};
+    ArrayList<String> route_start= new ArrayList<String>();
+    ArrayList<String> route_end= new ArrayList<String>();
     String[] end_route={"",""};
     String[] start_route={"",""};
 
@@ -47,15 +50,21 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
 
         stopnameArray[0] = MainActivity.startstopname.getText().toString();
         stopnameArray[1] = MainActivity.endstopname.getText().toString();
+        System.out.println("outside forloop "+stopnameArray[0]+"..."+stopnameArray[1]);
 
         for (int i = 0; i < stopnameArray.length; i++) {
+
             try {
+
+
                 URL url = new URL("https://data.smartdublin.ie/cgi-bin/rtpi/busstopinformation?stopid=&stopname=" + stopnameArray[i] + "&format=json");
 //            https://data.smartdublin.ie/cgi-bin/rtpi/busstopinformation?stopid=&stopname=Jamestown%20Rd&format=json
+                System.out.println("inside for loop "+i+" "+stopnameArray[i]);
                 HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
                 InputStream inputStream = httpsURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 String line = "";
+                data_StopInfo="";
                 while (line != null) {
                     line = bufferedReader.readLine();
                     data_StopInfo = data_StopInfo + line;
@@ -67,6 +76,7 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
                 timestamp = JA.getString("timestamp");
 
                 JSONArray jr = JA.getJSONArray("results");
+                System.out.println("paul"+jr);
                 for (int j = 0; j < jr.length(); j++) {
                     JSONObject jb1 = jr.getJSONObject(j);
                     try {
@@ -92,40 +102,39 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
                             try {
                                 name = job.getString("name");
 
-                                String routes =job.get("routes").toString();
+                                String routes =(String)job.getString("routes");
                                 JSONArray rt = new JSONArray(routes);
-
+System.out.println( rt+"Koushik----"+stopnameArray[i]);
                                 for (int l = 0; l < rt.length(); l++) {
-                                    JSONObject jb = rt.getJSONObject(l);
-                                    try {
-                                        route_no[l] = jb.getString("routes");
-                                    } catch (Exception e) {
+                                        try {
+                                            if(i==0){
+                                        route_start.add(rt.getString(l));
+//                                        singleParsed_StopInfo[i] = route_start + "\n";
+//
+//                                            dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
+//                                            System.out.println("...." +i +" " + dataParsed_StopInfo[i]);
+                                            }
+                                            else
+                                            {    route_end.add(rt.getString(l));
+//                                                System.out.println("Route Start"+route_end);
+//
+//                                            singleParsed_StopInfo[i] = route_end + "\n";
+//                                            dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
+//                                            System.out.println("...."+i +" "  + dataParsed_StopInfo[i]);
+                                            }
+                                        } catch (Exception e) {
                                         e.printStackTrace();
                                     }
-                                }
-                                if(i==0) {
-                                    start_route = route_no;
-                                    singleParsed_StopInfo[i] = start_route + "\n";
-                                    dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
-                                    System.out.println("...." + dataParsed_StopInfo[i]);
-                                }
-                                else {
-                                    end_route = route_no;
-                                    singleParsed_StopInfo[i] = end_route + "\n";
-                                    dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
-                                    System.out.println("...." + dataParsed_StopInfo[i]);
-                                }
+                                }System.out.println("Route Start"+route_start);
+                                System.out.println("Route End"+route_end);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-
-
                     }}
                     catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -138,12 +147,10 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
 //                singleParsed_StopInfo[i] = end_route + "\n";
 //            dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
 //            System.out.println("...."+dataParsed_StopInfo[i]);
-
         }
             return null;
         }
-
-    @Override
+        @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         Activity2.data.setText(this.dataParsed_StopInfo[0]);
