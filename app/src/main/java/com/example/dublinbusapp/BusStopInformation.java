@@ -43,8 +43,6 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
     ArrayList<String> route_end= new ArrayList<String>();
     String[] end_route={"",""};
     String[] start_route={"",""};
-
-
     @Override
     protected Void doInBackground(Void... voids) {
 
@@ -53,10 +51,7 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
         System.out.println("outside forloop "+stopnameArray[0]+"..."+stopnameArray[1]);
 
         for (int i = 0; i < stopnameArray.length; i++) {
-
             try {
-
-
                 URL url = new URL("https://data.smartdublin.ie/cgi-bin/rtpi/busstopinformation?stopid=&stopname=" + stopnameArray[i] + "&format=json");
 //            https://data.smartdublin.ie/cgi-bin/rtpi/busstopinformation?stopid=&stopname=Jamestown%20Rd&format=json
                 System.out.println("inside for loop "+i+" "+stopnameArray[i]);
@@ -89,11 +84,6 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
                         latitude = jb1.getString("latitude");
                         longitude = jb1.getString("longitude");
                         lastupdated = jb1.getString("lastupdated");
-
-
-//                        singleParsed_StopInfo[i] = shortname + "   " + fullname + "\n";
-//                        dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
-
                         String operators =jb1.get("operators").toString();
                         JSONArray opt=new JSONArray(operators);
 
@@ -104,28 +94,30 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
 
                                 String routes =(String)job.getString("routes");
                                 JSONArray rt = new JSONArray(routes);
-System.out.println( rt+"Koushik----"+stopnameArray[i]);
                                 for (int l = 0; l < rt.length(); l++) {
                                         try {
                                             if(i==0){
                                         route_start.add(rt.getString(l));
-//                                        singleParsed_StopInfo[i] = route_start + "\n";
-//
-//                                            dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
-//                                            System.out.println("...." +i +" " + dataParsed_StopInfo[i]);
+                                            System.out.println("...." +i +" " + dataParsed_StopInfo[i]);
                                             }
                                             else
                                             {    route_end.add(rt.getString(l));
-//                                                System.out.println("Route Start"+route_end);
-//
-//                                            singleParsed_StopInfo[i] = route_end + "\n";
-//                                            dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
-//                                            System.out.println("...."+i +" "  + dataParsed_StopInfo[i]);
+                                                System.out.println("Route Start"+route_end);
                                             }
                                         } catch (Exception e) {
                                         e.printStackTrace();
                                     }
-                                }System.out.println("Route Start"+route_start);
+                                }
+                                if(i==0) {
+                                    singleParsed_StopInfo[i] = route_start + "\n";
+                                    dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
+                                }
+                                else {
+                                    singleParsed_StopInfo[i] = route_end + "\n";
+                                            dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
+                                }
+
+                                    System.out.println("Route Start"+route_start);
                                 System.out.println("Route End"+route_end);
                             } catch (Exception e) {
                                 e.printStackTrace();

@@ -35,7 +35,7 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    Button click,clicksearch,btnfirebase,btnStopInfo;
+    Button click,clicksearch,btnfirebase,btnStopInfo,btnStartVoice,btnStopVoice;
     public static TextInputEditText search;
     public static TextInputEditText startstopname;
     public static TextInputEditText endstopname;
@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         clicksearch = findViewById(R.id.search_btn);
         btnfirebase=findViewById(R.id.firebase);
         btnStopInfo=findViewById(R.id.StopInfo);
+        btnStartVoice=findViewById(R.id.start_voice_button);
+        btnStopVoice=findViewById(R.id.end_voice_button);
 
         data = (TextView) findViewById(R.id.fetcheddata);
 
@@ -106,6 +108,26 @@ public class MainActivity extends AppCompatActivity {
 //                }
             }
         });
+        btnStopVoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent vb=new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                vb.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                vb.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.ENGLISH);
+                startActivityForResult(vb,102);
+            }
+        });
+        btnStartVoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent va=new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                va.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                va.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.ENGLISH);
+                startActivityForResult(va,101);
+            }
+        });
         click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(vc,100);
             }
         });
+
         btnfirebase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,15 +209,31 @@ btnStopInfo.setOnClickListener(new View.OnClickListener(){
                 if(resultCode==RESULT_OK&&null!=data){
                     ArrayList<String> result=data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     search.setText(result.get(0));
+                    openActivity2();
                     fetchData process = new fetchData();
                     process.execute();
+                }}
+                break;
+                case 101:{
+                    if(resultCode==RESULT_OK&&null!=data){
+                        ArrayList<String> result=data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                        startstopname.setText(result.get(0));
+//                        openActivity2();
+//                        BusStopInformation processdata = new BusStopInformation();
+//                        processdata.execute();
+                    }
+                    break;
+            }
+            case 102:{
+                if(resultCode==RESULT_OK&&null!=data){
+                    ArrayList<String> result=data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    endstopname.setText(result.get(0));
+                    openActivity2();
+                    BusStopInformation processdata = new BusStopInformation();
+                    processdata.execute();
                 }
                 break;
             }
         }
-
-
     }
-
-
 }
