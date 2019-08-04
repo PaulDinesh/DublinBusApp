@@ -1,7 +1,10 @@
 package com.example.dublinbusapp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognitionService;
 import android.speech.RecognizerIntent;
@@ -9,12 +12,17 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -35,7 +43,10 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    private WebView mywebView;
     Button click,clicksearch,btnfirebase,btnStopInfo,btnStartVoice,btnStopVoice;
+
+
     public static TextInputEditText search;
     public static TextInputEditText startstopname;
     public static TextInputEditText endstopname;
@@ -48,6 +59,39 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //adding the webview and notificationbutton//
+        mywebView = (WebView) findViewById(R.id.webView);
+        WebSettings webSettings = mywebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        btn_webview = (Button) findViewById(R.id.btn_webview);
+
+        btn_webview.setOnClickListener(new View.OnClickListener() {
+
+                                           @Override
+                                           public void onClick(View view) {
+
+
+                                               mywebView.loadUrl("https://www.dublinbus.ie/Contact-Us1/Customer-Comment-Form/");
+                                               mywebView.setWebViewClient(new WebViewClient());
+
+                                           }
+                                       }
+        );
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            NotificationChannel channel= new NotificationChannel(CHANNEL_ID,CHANNEL_name, NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(CHANNEL_desc);
+            NotificationManager manager= getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+
+        }
+        findViewById(R.id.buttonNotify).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displayNotification();
+            }
+
+
+        });
 
         database = FirebaseDatabase.getInstance().getReference();
 //        myRef = database.getReference("9101");
@@ -160,6 +204,7 @@ btnStopInfo.setOnClickListener(new View.OnClickListener(){
 });
 
     }
+
     public void openActivity2(){
         Intent intent = new Intent(MainActivity.this, Activity2.class);
         startActivity(intent);
@@ -197,6 +242,26 @@ btnStopInfo.setOnClickListener(new View.OnClickListener(){
         for (DataSnapshot ds : dataSnapshot.getChildren()){
             Log.d("loop", "Value is: " + ds);
         }
+
+    }
+    public void onBackPressed()
+    {
+        if (mywebView.canGoBack()){
+            mywebView.goBack();
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+    private void displayNotification(){
+        NotificationCompat.Builder mBuilder=
+                new NotificationCompat.Builder(this,CHANNEL_ID )
+                        .setSmallIcon(R.drawable.ic_transfer)
+                        .setContentTitle("working")
+                        .setContentText("notification")
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        NotificationManagerCompat mNotificationMgr= NotificationManagerCompat.from(this);
+        mNotificationMgr.notify(1, mBuilder.build());
 
     }
 

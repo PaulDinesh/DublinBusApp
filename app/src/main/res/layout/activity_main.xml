@@ -169,5 +169,43 @@
         android:layout_marginStart="302dp"
         android:layout_marginTop="300dp"
         android:text="End-Voice" />
+    <Button
+        android:id="@+id/btn_webview"
+        android:layout_width="223dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="56dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginRight="132dp"
+        android:text="WebView" />
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="214dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="26dp" />
+    <Button
+        android:id="@+id/buttonNotify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="260dp"
+        tools:layout_editor_absoluteY="643dp" />
+
 
 </RelativeLayout>
