@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity2"></activity>
+        <activity android:name=".Webview_Activity"></activity>
+        <activity android:name=".Activity2" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

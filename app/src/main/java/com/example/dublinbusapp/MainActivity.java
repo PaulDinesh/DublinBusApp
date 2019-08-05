@@ -74,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
                                            @Override
                                            public void onClick(View view) {
-                                               mywebView.loadUrl("https://www.dublinbus.ie/Contact-Us1/Customer-Comment-Form/");
-                                               mywebView.setWebViewClient(new WebViewClient());
-
+                                               openWebViewActivity();
+//                                               mywebView.loadUrl("https://www.dublinbus.ie/Contact-Us1/Customer-Comment-Form/");
+//                                               mywebView.setWebViewClient(new WebViewClient());
                                            }
                                        }
         );
@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
             channel.setDescription(CHANNEL_desc);
             NotificationManager manager= getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
-
         }
         findViewById(R.id.buttonNotify).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,6 +209,10 @@ btnStopInfo.setOnClickListener(new View.OnClickListener(){
 
     public void openActivity2(){
         Intent intent = new Intent(MainActivity.this, Activity2.class);
+        startActivity(intent);
+    }
+    public void openWebViewActivity(){
+        Intent intent = new Intent(MainActivity.this, Webview_Activity.class);
         startActivity(intent);
     }
 
