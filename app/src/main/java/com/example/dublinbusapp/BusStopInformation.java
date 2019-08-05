@@ -133,18 +133,22 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
                             set.add(item);
                         }
                     }
-                    for (String str : unique_start) {
+                    String[] start_Array = unique_start.toArray(new String[unique_start.size()]);
+
+                    for (String str : start_Array) {
                         singleParsed_StopInfo[i] = str + "\n";
                     dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
                 }}
                 else {
+
                     for (String item : route_end) {
                         if (!set.contains(item)) {
                             unique_end.add(item);
                             set.add(item);
                         }
                     }
-                    for (String str : unique_end) {
+                    String[] end_Array = unique_end.toArray(new String[unique_end.size()]);
+                    for (String str : end_Array) {
                         singleParsed_StopInfo[i] = str + "\n";
                     dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
                 }}
