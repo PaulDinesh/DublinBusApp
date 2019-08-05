@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     Button btn_webview;
     Button click,clicksearch,btnfirebase,btnStopInfo,btnStartVoice,btnStopVoice;
 
-
     //String Notify_route=fetchData.route.getText().toString();
     private static final String  CHANNEL_ID ="SIMPLIFIED_CODING";
     private static final String  CHANNEL_name ="SIMPLG";

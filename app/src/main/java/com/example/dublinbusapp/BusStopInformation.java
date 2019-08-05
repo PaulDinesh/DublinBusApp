@@ -97,36 +97,41 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
                                 for (int l = 0; l < rt.length(); l++) {
                                         try {
                                             if(i==0){
-                                        route_start.add(rt.getString(l));
+                                        route_start.add(stopid);
+
+//                                        route_start.add(rt.getString(l));
                                             System.out.println("...." +i +" " + dataParsed_StopInfo[i]);
                                             }
-                                            else
-                                            {    route_end.add(rt.getString(l));
+                                            else{
+                                                route_end.add(stopid);
+//                                                route_end.add(rt.getString(l));
                                                 System.out.println("Route Start"+route_end);
                                             }
                                         } catch (Exception e) {
                                         e.printStackTrace();
                                     }
                                 }
-                                if(i==0) {
-                                    singleParsed_StopInfo[i] = route_start + "\n";
-                                    dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
-                                }
-                                else {
-                                    singleParsed_StopInfo[i] = route_end + "\n";
-                                            dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
-                                }
-
-                                    System.out.println("Route Start"+route_start);
-                                System.out.println("Route End"+route_end);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                    }}
+                    }
+
+                    }
                     catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
+
+                if(i==0) {
+                    singleParsed_StopInfo[i] = route_start + "\n";
+                    dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
+                }
+                else {
+                    singleParsed_StopInfo[i] = route_end + "\n";
+                    dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
+                }
+                System.out.println("Route Start"+route_start);
+                System.out.println("Route End"+route_end);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
