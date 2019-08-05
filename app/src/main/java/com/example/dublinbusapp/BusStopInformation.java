@@ -133,10 +133,10 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
                             set.add(item);
                         }
                     }
-
-                    singleParsed_StopInfo[i] = unique_start + "\n";
+                    for (String str : unique_start) {
+                        singleParsed_StopInfo[i] = str + "\n";
                     dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
-                }
+                }}
                 else {
                     for (String item : route_end) {
                         if (!set.contains(item)) {
@@ -144,10 +144,10 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
                             set.add(item);
                         }
                     }
-
-                    singleParsed_StopInfo[i] = unique_end + "\n";
+                    for (String str : unique_end) {
+                        singleParsed_StopInfo[i] = str + "\n";
                     dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
-                }
+                }}
                 System.out.println("Route Start"+route_start);
                 System.out.println("Route End"+route_end);
             } catch (MalformedURLException e) {
