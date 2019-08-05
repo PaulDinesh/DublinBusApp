@@ -292,7 +292,7 @@ btnStopInfo.setOnClickListener(new View.OnClickListener(){
                     break;
             }
             case 102:{
-                if(resultCode==Rgit ESULT_OK&&null!=data){
+                if(resultCode==RESULT_OK&&null!=data){
                     ArrayList<String> result=data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     endstopname.setText(result.get(0));
                     openActivity2();
