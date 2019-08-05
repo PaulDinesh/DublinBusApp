@@ -15,6 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -41,6 +42,9 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
     String name;
     ArrayList<String> route_start= new ArrayList<String>();
     ArrayList<String> route_end= new ArrayList<String>();
+    HashSet<String> set = new HashSet<>();
+    ArrayList<String> unique_start = new ArrayList<>();
+    ArrayList<String> unique_end = new ArrayList<>();
     String[] end_route={"",""};
     String[] start_route={"",""};
     @Override
@@ -123,11 +127,25 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
                 }
 
                 if(i==0) {
-                    singleParsed_StopInfo[i] = route_start + "\n";
+                    for (String item : route_start) {
+                        if (!set.contains(item)) {
+                            unique_start.add(item);
+                            set.add(item);
+                        }
+                    }
+
+                    singleParsed_StopInfo[i] = unique_start + "\n";
                     dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
                 }
                 else {
-                    singleParsed_StopInfo[i] = route_end + "\n";
+                    for (String item : route_end) {
+                        if (!set.contains(item)) {
+                            unique_end.add(item);
+                            set.add(item);
+                        }
+                    }
+
+                    singleParsed_StopInfo[i] = unique_end + "\n";
                     dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
                 }
                 System.out.println("Route Start"+route_start);
