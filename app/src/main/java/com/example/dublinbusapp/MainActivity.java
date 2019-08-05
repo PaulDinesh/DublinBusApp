@@ -44,9 +44,13 @@ import java.util.Scanner;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private WebView mywebView;
+    Button btn_webview;
     Button click,clicksearch,btnfirebase,btnStopInfo,btnStartVoice,btnStopVoice;
 
-
+    //String Notify_route=fetchData.route.getText().toString();
+    private static final String  CHANNEL_ID ="SIMPLIFIED_CODING";
+    private static final String  CHANNEL_name ="SIMPLG";
+    private static final String  CHANNEL_desc ="SIMPLIF";
     public static TextInputEditText search;
     public static TextInputEditText startstopname;
     public static TextInputEditText endstopname;
@@ -69,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
                                            @Override
                                            public void onClick(View view) {
-
-
                                                mywebView.loadUrl("https://www.dublinbus.ie/Contact-Us1/Customer-Comment-Form/");
                                                mywebView.setWebViewClient(new WebViewClient());
 
@@ -257,8 +259,8 @@ btnStopInfo.setOnClickListener(new View.OnClickListener(){
         NotificationCompat.Builder mBuilder=
                 new NotificationCompat.Builder(this,CHANNEL_ID )
                         .setSmallIcon(R.drawable.ic_transfer)
-                        .setContentTitle("working")
-                        .setContentText("notification")
+                        .setContentTitle("Time Left for 122 Bus")
+                        .setContentText("7 min")
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         NotificationManagerCompat mNotificationMgr= NotificationManagerCompat.from(this);
         mNotificationMgr.notify(1, mBuilder.build());
@@ -290,7 +292,7 @@ btnStopInfo.setOnClickListener(new View.OnClickListener(){
                     break;
             }
             case 102:{
-                if(resultCode==RESULT_OK&&null!=data){
+                if(resultCode==Rgit ESULT_OK&&null!=data){
                     ArrayList<String> result=data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     endstopname.setText(result.get(0));
                     openActivity2();
