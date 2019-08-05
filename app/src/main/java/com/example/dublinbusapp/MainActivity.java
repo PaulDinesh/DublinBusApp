@@ -54,13 +54,15 @@ public class MainActivity extends AppCompatActivity {
     public static TextInputEditText search;
     public static TextInputEditText startstopname;
     public static TextInputEditText endstopname;
-
+    public static String[] Main_Start_Array;
+    public static String[] Main_End_Array;
     public static TextView data;
 //    DatabaseReference myRef;
     DatabaseReference database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //adding the webview and notificationbutton//

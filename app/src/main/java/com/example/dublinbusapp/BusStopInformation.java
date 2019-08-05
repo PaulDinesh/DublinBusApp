@@ -47,18 +47,20 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
     ArrayList<String> unique_end = new ArrayList<>();
     String[] end_route={"",""};
     String[] start_route={"",""};
+    public String[] start_Array;
+    public String[] end_Array;
     @Override
     protected Void doInBackground(Void... voids) {
 
         stopnameArray[0] = MainActivity.startstopname.getText().toString();
         stopnameArray[1] = MainActivity.endstopname.getText().toString();
-        System.out.println("outside forloop "+stopnameArray[0]+"..."+stopnameArray[1]);
+//        System.out.println("outside forloop "+stopnameArray[0]+"..."+stopnameArray[1]);
 
         for (int i = 0; i < stopnameArray.length; i++) {
             try {
                 URL url = new URL("https://data.smartdublin.ie/cgi-bin/rtpi/busstopinformation?stopid=&stopname=" + stopnameArray[i] + "&format=json");
 //            https://data.smartdublin.ie/cgi-bin/rtpi/busstopinformation?stopid=&stopname=Jamestown%20Rd&format=json
-                System.out.println("inside for loop "+i+" "+stopnameArray[i]);
+//                System.out.println("inside for loop "+i+" "+stopnameArray[i]);
                 HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
                 InputStream inputStream = httpsURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -75,7 +77,7 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
                 timestamp = JA.getString("timestamp");
 
                 JSONArray jr = JA.getJSONArray("results");
-                System.out.println("paul"+jr);
+//                System.out.println("paul"+jr);
                 for (int j = 0; j < jr.length(); j++) {
                     JSONObject jb1 = jr.getJSONObject(j);
                     try {
@@ -104,12 +106,12 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
                                         route_start.add(stopid);
 
 //                                        route_start.add(rt.getString(l));
-                                            System.out.println("...." +i +" " + dataParsed_StopInfo[i]);
+//                                            System.out.println("...." +i +" " + dataParsed_StopInfo[i]);
                                             }
                                             else{
                                                 route_end.add(stopid);
 //                                                route_end.add(rt.getString(l));
-                                                System.out.println("Route Start"+route_end);
+//                                                System.out.println("Route Start"+route_end);
                                             }
                                         } catch (Exception e) {
                                         e.printStackTrace();
@@ -133,27 +135,27 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
                             set.add(item);
                         }
                     }
-                    String[] start_Array = unique_start.toArray(new String[unique_start.size()]);
-
+                    start_Array = unique_start.toArray(new String[unique_start.size()]);
+                    MainActivity.Main_Start_Array=start_Array;
                     for (String str : start_Array) {
                         singleParsed_StopInfo[i] = str + "\n";
                     dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
                 }}
                 else {
-
                     for (String item : route_end) {
                         if (!set.contains(item)) {
                             unique_end.add(item);
                             set.add(item);
                         }
                     }
-                    String[] end_Array = unique_end.toArray(new String[unique_end.size()]);
+                    end_Array = unique_end.toArray(new String[unique_end.size()]);
+                    MainActivity.Main_End_Array=end_Array;
                     for (String str : end_Array) {
                         singleParsed_StopInfo[i] = str + "\n";
                     dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
                 }}
-                System.out.println("Route Start"+route_start);
-                System.out.println("Route End"+route_end);
+//                System.out.println("Route Start"+route_start);
+//                System.out.println("Route End"+route_end);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
