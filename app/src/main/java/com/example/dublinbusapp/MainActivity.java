@@ -47,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
     Button btn_webview;
     Button click,clicksearch,btnfirebase,btnStopInfo,btnStartVoice,btnStopVoice;
 
+    public interface readCallback{
+        void onCallback(String[] start,String[] end);
+    }
+
+
     //String Notify_route=fetchData.route.getText().toString();
     private static final String  CHANNEL_ID ="SIMPLIFIED_CODING";
     private static final String  CHANNEL_name ="SIMPLG";
@@ -59,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     public static TextView data;
 //    DatabaseReference myRef;
     DatabaseReference database;
-
+    BusStopInfo bus=new BusStopInfo();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -148,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
 //                    for(int i=0;i<stop.length();i++){
 //                        JSONArray stop1 = stop.getJSONArray(i);
 //                    }
-//
 //                }
 //                catch(JSONException e){
 //                    e.printStackTrace();
@@ -196,19 +200,18 @@ public class MainActivity extends AppCompatActivity {
 btnStopInfo.setOnClickListener(new View.OnClickListener(){
         @Override
                 public void onClick(View v){
-            openActivity2();
+//            openActivity2();
 //            fetchData process = new fetchData();
 //            process.execute();
-
-
-            BusStopInformation processdata = new BusStopInformation();
-            processdata.execute();
+//           BusStopInformation processdata = new BusStopInformation();
+//            processdata.execute();
+//            openActivity2();
+            readBusData();
         }
 });
 
     }
-
-    public void openActivity2(){
+public void openActivity2(){
         Intent intent = new Intent(MainActivity.this, Activity2.class);
         startActivity(intent);
     }
@@ -269,7 +272,19 @@ btnStopInfo.setOnClickListener(new View.OnClickListener(){
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         NotificationManagerCompat mNotificationMgr= NotificationManagerCompat.from(this);
         mNotificationMgr.notify(1, mBuilder.build());
-
+    }
+    public void readBusData  (){
+        bus.getBusStopInfo(new readCallback() {
+            @Override
+            public void onCallback(String[] start, String[] end) {
+System.out.println("Aticy----------------------------");
+                Activity2.activity2_Start_Array=start;
+                Activity2.activity2_End_Array=end;
+                for(int i=0;i<1;i++)
+                System.out.println("Aticy----------------------------"+Activity2.activity2_Start_Array[i]+Activity2.activity2_End_Array[i]);
+                openActivity2();
+            }
+});
     }
 
     @Override
@@ -300,9 +315,10 @@ btnStopInfo.setOnClickListener(new View.OnClickListener(){
                 if(resultCode==RESULT_OK&&null!=data){
                     ArrayList<String> result=data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     endstopname.setText(result.get(0));
-                    openActivity2();
-                    BusStopInformation processdata = new BusStopInformation();
-                    processdata.execute();
+                    readBusData();
+                    //                    openActivity2();
+//                    BusStopInformation processdata = new BusStopInformation();
+//                    processdata.execute();
                 }
                 break;
             }

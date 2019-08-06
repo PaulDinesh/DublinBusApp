@@ -38,7 +38,7 @@ public class fetchData extends AsyncTask<Void,Void,Void> {
     String operator;
     String additionalinformation;
     String lowfloorstatus;
-    String route;
+    public static String route;
     String sourcetimestamp;
     String monitored;
 
