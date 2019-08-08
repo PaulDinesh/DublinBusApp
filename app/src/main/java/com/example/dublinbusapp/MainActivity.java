@@ -38,6 +38,7 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -48,11 +49,10 @@ public class MainActivity extends AppCompatActivity {
     Button click,clicksearch,btnfirebase,btnStopInfo,btnStartVoice,btnStopVoice;
 
     public interface readCallback{
-        void onCallback(String[] start,String[] end);
+        void onCallback(ArrayList<StopInformation> start,ArrayList<StopInformation> end);
     }
 
-
-    //String Notify_route=fetchData.route.getText().toString();
+    public static String Notify_route;
     private static final String  CHANNEL_ID ="SIMPLIFIED_CODING";
     private static final String  CHANNEL_name ="SIMPLG";
     private static final String  CHANNEL_desc ="SIMPLIF";
@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 openActivity2();
                 fetchData process = new fetchData();
                 process.execute();
+
 
 //                read & parse json
 //                Resources res = getResources();
@@ -264,10 +265,11 @@ public void openActivity2(){
         }
     }
     private void displayNotification(){
+        Notify_route=fetchData.route;
         NotificationCompat.Builder mBuilder=
                 new NotificationCompat.Builder(this,CHANNEL_ID )
                         .setSmallIcon(R.drawable.ic_transfer)
-                        .setContentTitle("Time Left for 122 Bus")
+                        .setContentTitle("Time Left for "+Notify_route+" Bus")
                         .setContentText("7 min")
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         NotificationManagerCompat mNotificationMgr= NotificationManagerCompat.from(this);
@@ -276,12 +278,16 @@ public void openActivity2(){
     public void readBusData  (){
         bus.getBusStopInfo(new readCallback() {
             @Override
-            public void onCallback(String[] start, String[] end) {
-System.out.println("Aticy----------------------------");
+            public void onCallback(ArrayList<StopInformation> start, ArrayList<StopInformation> end) {
+System.out.println("Aticy-------------------before passing values---------");
+
+                Activity2.activity2_Start_Array=null;
+                Activity2.activity2_End_Array=null;
+
                 Activity2.activity2_Start_Array=start;
                 Activity2.activity2_End_Array=end;
                 for(int i=0;i<1;i++)
-                System.out.println("Aticy----------------------------"+Activity2.activity2_Start_Array[i]+Activity2.activity2_End_Array[i]);
+//                System.out.println("Aticy-------after passing values---------------------"+Activity2.activity2_Start_Array.length+Activity2.activity2_End_Array.length);
                 openActivity2();
             }
 });

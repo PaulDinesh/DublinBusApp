@@ -2,43 +2,26 @@ package com.example.dublinbusapp;
 
 public class StopInformation {
 
-    private String PlateCode;
-    private String CommonName_lang_en;
-    private String ShortCommonName_lang_en;
-    private String Street_lang_en;
+    private String stopid;
+    private String shortname;
+    private String fullname;
 
-    public String getPlateCode() {
-        return PlateCode;
+    public String getstopid() {
+        return stopid;
     }
-
-    public void setPlateCode(String plateCode) {
-        PlateCode = plateCode;
+    public void setstopid(String Stopid) {
+        stopid = Stopid;
     }
-
-    public String getCommonName_lang_en() {
-        return CommonName_lang_en;
+    public String getshortname() {
+        return shortname;
     }
-
-    public void setCommonName_lang_en(String commonName_lang_en) {
-        CommonName_lang_en = commonName_lang_en;
+    public void setshortname(String Shortname) {
+        shortname = Shortname;
     }
-
-    public String getShortCommonName_lang_en() {
-        return ShortCommonName_lang_en;
+    public String getfullname() {
+        return fullname;
     }
-
-    public void setShortCommonName_lang_en(String shortCommonName_lang_en) {
-        ShortCommonName_lang_en = shortCommonName_lang_en;
+    public void setfullname(String Fullname) {
+        fullname = Fullname;
     }
-
-    public String getStreet_lang_en() {
-        return Street_lang_en;
-    }
-
-    public void setStreet_lang_en(String street_lang_en) {
-        Street_lang_en = street_lang_en;
-    }
-
-
-
 }

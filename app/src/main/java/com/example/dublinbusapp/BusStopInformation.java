@@ -28,6 +28,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -66,17 +67,18 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
     public String[] end_Array;
     public static TextView data;
     public static TextView Endstopdata;
+    public String commonroute="";
 
     @Override
     protected Void doInBackground(Void... voids) {
 
-        stopnameArray[0] = MainActivity.startstopname.getText().toString();
-        stopnameArray[1] = MainActivity.endstopname.getText().toString();
-//        System.out.println("outside forloop "+stopnameArray[0]+"..."+stopnameArray[1]);
+        stopnameArray[0] = Activity2.activity2_start.toString();
+        stopnameArray[1] = Activity2.activity2_end.toString();
+        System.out.println("outside forloop "+stopnameArray[0]+"..."+stopnameArray[1]);
 
         for (int i = 0; i < stopnameArray.length; i++) {
             try {
-                URL url = new URL("https://data.smartdublin.ie/cgi-bin/rtpi/busstopinformation?stopid=&stopname=" + stopnameArray[i] + "&format=json");
+                URL url = new URL("https://data.smartdublin.ie/cgi-bin/rtpi/busstopinformation?stopid=" + stopnameArray[i] + "&stopname=&format=json");
 //            https://data.smartdublin.ie/cgi-bin/rtpi/busstopinformation?stopid=&stopname=Jamestown%20Rd&format=json
 //                System.out.println("inside for loop "+i+" "+stopnameArray[i]);
                 HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
@@ -121,12 +123,14 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
                                 for (int l = 0; l < rt.length(); l++) {
                                     try {
                                         if (i == 0) {
-                                            route_start.add(stopid);
+                                            route_start.add(routes);
 
 //                                        route_start.add(rt.getString(l));
-//                                            System.out.println("...." +i +" " + dataParsed_StopInfo[i]);
+                                            System.out.println("bahrath...." +i +" " +routes);
                                         } else {
-                                            route_end.add(stopid);
+                                            route_end.add(routes);
+                                            System.out.println("bahrath...." +i +" " +routes);
+
 //                                                route_end.add(rt.getString(l));
 //                                                System.out.println("Route Start"+route_end);
                                         }
@@ -168,7 +172,52 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
                     end_Array = unique_end.toArray(new String[unique_end.size()]);
                     MainActivity.Main_End_Array = end_Array;
                     for (String str : end_Array) {
-                        /*SpannableString spanString = new SpannableString(str);
+
+                        singleParsed_StopInfo[i] = str + "\n";
+                        dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
+                    }
+                }
+//                for (String s : start_Array) {System.out.println("Route Start"+s);}
+//                for (String s : end_Array) {System.out.println("Route End"+s);}
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+//            if (start_route == end_route)
+//              start_route.retainAll(end_route);
+//                singleParsed_StopInfo[i] = end_route + "\n";
+//            dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
+//            System.out.println("...."+dataParsed_StopInfo[i]);
+        }
+        System.out.println("To Array List "+Arrays.asList(start_Array));
+        System.out.println("To Array List "+Arrays.asList(end_Array));
+        HashSet<String> set1 = new HashSet<String>(Arrays.asList(start_Array));
+        HashSet<String> set2 = new HashSet<String>(Arrays.asList(end_Array));
+        set1.retainAll(set2);
+//        HashSet set1 = new HashSet(Arrays.asList(start_Array));
+//        HashSet set2 = new HashSet(Arrays.asList(end_Array));
+//        set1.retainAll(set2);
+        System.out.println("Common Route RT"+set1);
+        //        commonroute=set1;
+        return null;
+    }
+
+        @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        Activity2.data.setText(this.dataParsed_StopInfo[0]);
+        Activity2.Endstopdata.setText(this.dataParsed_StopInfo[1]);
+        Activity2.commonroute.setText(this.commonroute);
+
+//        Activity2.start_listView.setAdapter(this,android.R.layout.simple_list_item_1,this.start_Array);
+//        Activity2.start_listView.setText(this.end_Array);
+    }
+}
+
+ /*SpannableString spanString = new SpannableString(str);
                         Matcher matcher = Pattern.compile("@([A-Za-z0-9_-]+)").matcher(spanString);
 
                         while (matcher.find())
@@ -195,34 +244,3 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
                         txtData.setText(spanString);
                         txtData.setMovementMethod(LinkMovementMethod.getInstance());
                     }*/
-                        singleParsed_StopInfo[i] = str + "\n";
-                        dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
-                    }
-                }
-//                System.out.println("Route Start"+route_start);
-//                System.out.println("Route End"+route_end);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-//            if (start_route == end_route)
-//              start_route.retainAll(end_route);
-//                singleParsed_StopInfo[i] = end_route + "\n";
-//            dataParsed_StopInfo[i] = dataParsed_StopInfo[i] + singleParsed_StopInfo[i];
-//            System.out.println("...."+dataParsed_StopInfo[i]);
-        }
-        return null;
-    }
-        @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        Activity2.data.setText(this.dataParsed_StopInfo[0]);
-        Activity2.Endstopdata.setText(this.dataParsed_StopInfo[1]);
-
-//        Activity2.start_listView.setAdapter(this,android.R.layout.simple_list_item_1,this.start_Array);
-//        Activity2.start_listView.setText(this.end_Array);
-    }
-}
