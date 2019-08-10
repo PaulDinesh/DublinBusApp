@@ -24,4 +24,14 @@ public class StopInformation {
     public void setfullname(String Fullname) {
         fullname = Fullname;
     }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(fullname+"("+shortname+")-"+ stopid);
+    }
+
 }

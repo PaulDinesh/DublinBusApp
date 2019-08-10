@@ -86,6 +86,7 @@ public class BusStopInfo {
             final StringBuilder builder = new StringBuilder();
             try {
                 start_method();
+
                 end_method();
                 rCallback.onCallback(unique_start,unique_end1);
             }
@@ -147,6 +148,8 @@ public class BusStopInfo {
                             sobj.setfullname(fullname);
                             System.out.println("object full"+sobj.getfullname());
 
+                            route_start.add(sobj);
+
                             for (int k = 0; k < opt.length(); k++) {
                                 JSONObject job = opt.getJSONObject(k);
                                 try {
@@ -156,7 +159,8 @@ public class BusStopInfo {
                                     System.out.println(".."+"routes "+routes);
                                     JSONArray rt = new JSONArray(routes);
                                     for (int l = 0; l < rt.length(); l++) {
-                                        try {route_start.add(sobj);
+                                        try {
+//                                            route_start.add(sobj);
 //                                            System.out.println("...." +i +" " + dataParsed_StopInfo[i]);
                                             } catch (Exception e) {
                                             e.printStackTrace();
@@ -205,7 +209,7 @@ public class BusStopInfo {
              try {
                     URL url = new URL("https://data.smartdublin.ie/cgi-bin/rtpi/busstopinformation?stopid=&stopname=" + stopnameArray[1] + "&format=json");
 //            https://data.smartdublin.ie/cgi-bin/rtpi/busstopinformation?stopid=&stopname=Jamestown%20Rd&format=json
-//                System.out.println("inside for loop "+i+" "+stopnameArray[i]);
+                System.out.println("inside for loop 1 "+stopnameArray[1]);
                     HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
                     InputStream inputStream = httpsURLConnection.getInputStream();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -223,7 +227,7 @@ public class BusStopInfo {
                     timestamp1 = JA1.getString("timestamp");
 
                     JSONArray jr1 = JA1.getJSONArray("results");
-//                System.out.println("paul"+jr);
+                System.out.println("paul"+jr1);
                     for (int j = 0; j < jr1.length(); j++) {
                         JSONObject jb11 = jr1.getJSONObject(j);
                         try {
@@ -240,9 +244,11 @@ public class BusStopInfo {
                             JSONArray opt1 = new JSONArray(operators1);
 
                             StopInformation sobj1 = new StopInformation();
-                            sobj1.setstopid(stopid);
-                            sobj1.setshortname(shortname);
-                            sobj1.setfullname(fullname);
+                            sobj1.setstopid(stopid1);
+                            sobj1.setshortname(shortname1);
+                            sobj1.setfullname(fullname1);
+
+                            route_end1.add(sobj1);
 
                             for (int k = 0; k < opt1.length(); k++) {
                                 JSONObject job1 = opt1.getJSONObject(k);
@@ -251,13 +257,13 @@ public class BusStopInfo {
 
                                     routes1 = (String) job1.getString("routes");
                                     System.out.println(".."+1+"routes "+routes1);
-                                    JSONArray rt = new JSONArray(routes1);
-                                    for (int l = 0; l < rt.length(); l++) {
-                                        try {//                                        route_start.add(rt.getString(l));
-//                                            System.out.println("...." +i +" " + dataParsed_StopInfo[i]);
-                                                 route_end1.add(sobj1);
-//                                                route_end.add(rt.getString(l));
-//                                                System.out.println("Route Start"+route_end);
+                                    JSONArray rt1 = new JSONArray(routes1);
+                                    for (int l = 0; l < rt1.length(); l++) {
+                                        try {
+//                                            System.out.println("...." +1 +" " + dataParsed_StopInfo[1]);
+//                                                 route_end1.add(sobj1);
+//
+       System.out.println("Route End"+route_end1);
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
@@ -278,6 +284,8 @@ public class BusStopInfo {
                                 set2.add(route_end1.get(count));
                             }
                         }
+
+                 System.out.println("enddddd--"+unique_end1);
 //To be included if added in TextView
                  //                        end_Array1 = unique_end1.toArray(new String[unique_end1.size()]);
 //                        for (String str : end_Array1) {

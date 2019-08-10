@@ -286,8 +286,8 @@ System.out.println("Aticy-------------------before passing values---------");
 
                 Activity2.activity2_Start_Array=start;
                 Activity2.activity2_End_Array=end;
-                for(int i=0;i<1;i++)
-//                System.out.println("Aticy-------after passing values---------------------"+Activity2.activity2_Start_Array.length+Activity2.activity2_End_Array.length);
+
+               System.out.println("Aticy-------after passing values---------------------"+start+end);
                 openActivity2();
             }
 });

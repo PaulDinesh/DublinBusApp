@@ -72,8 +72,8 @@ public class BusStopInformation extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
 
-        stopnameArray[0] = Activity2.activity2_start.toString();
-        stopnameArray[1] = Activity2.activity2_end.toString();
+        stopnameArray[0] = Activity2.activity2_start.getstopid().toString();
+        stopnameArray[1] = Activity2.activity2_end.getstopid().toString();
         System.out.println("outside forloop "+stopnameArray[0]+"..."+stopnameArray[1]);
 
         for (int i = 0; i < stopnameArray.length; i++) {

@@ -28,18 +28,15 @@ public class Activity2 extends AppCompatActivity {
     public static TextView commonroute;
     public static ListView start_listView;
     public static ListView end_listView;
-    public static ArrayList<StopInformation> activity2_Start_Array ;
-    public static ArrayList<StopInformation> activity2_End_Array ;
-    public static String activity2_start = "";
-    public static String activity2_end = "";
+    public static ArrayList<StopInformation> activity2_Start_Array;
+    public static ArrayList<StopInformation> activity2_End_Array;
+    public static StopInformation activity2_start = new StopInformation();
+    public static StopInformation activity2_end = new StopInformation();
 
     public String commonrt;
     Button btnBusno;
 
-    public interface BackPressedListener {
-        void onBackPressed();
-    }
-//    String[] List_start=start_Array;
+    //    String[] List_start=start_Array;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,63 +45,53 @@ public class Activity2 extends AppCompatActivity {
         Endstopdata = (TextView) findViewById(R.id.Endstopdata);
         commonroute = (TextView) findViewById(R.id.commonroute);
 
-        StopInformation startobj = new StopInformation();
-        startobj=activity2_Start_Array;
-        startobj.getstopid();
-        startobj.getshortname();
-        startobj.getfullname();
 
-        StopInformation endobj = new StopInformation();
-        endobj=activity2_End_Array;
-        endobj.getstopid();
-        endobj.getshortname();
-        endobj.getfullname();
+        System.out.println("Activity2 " + activity2_Start_Array);
+        System.out.println("Activity2 " + activity2_End_Array);
 
-        System.out.println("Activity2 "+activity2_Start_Array);
-        System.out.println("Activity2 "+activity2_End_Array);
-
-//        Listview();
+        Listview();
 
         btnBusno = findViewById(R.id.BusNo);
         btnBusno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//                Listview();
-
                 BusStopInformation processdata = new BusStopInformation();
                 processdata.execute();
             }
         });
     }
-        /*private void Listview() {
-            start_listView = (ListView) findViewById(R.id.List_Startdata);
-            ArrayAdapter<String> adapter_start = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, activity2_Start_Array);
+
+    private void Listview() {
+
+
+
+        start_listView = (ListView) findViewById(R.id.List_Startdata);
+            ArrayAdapter<StopInformation> adapter_start = new ArrayAdapter<StopInformation>(this, android.R.layout.simple_list_item_1, activity2_Start_Array);
             start_listView.setAdapter(adapter_start);
             start_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(Activity2.this, activity2_Start_Array.get(position), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity2.this,activity2_Start_Array.get(position).toString(), Toast.LENGTH_SHORT).show();
                     activity2_start = activity2_Start_Array.get(position);
                 }
 
             });
 
             end_listView = (ListView) findViewById(R.id.List_Enddata);
-            ArrayAdapter<String> adapter_end = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, activity2_End_Array);
+            ArrayAdapter<StopInformation> adapter_end = new ArrayAdapter<StopInformation>(this, android.R.layout.simple_list_item_1, activity2_End_Array);
             end_listView.setAdapter(adapter_end);
             end_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(Activity2.this, activity2_Start_Array.get(position), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity2.this,activity2_End_Array.get(position).toString(), Toast.LENGTH_SHORT).show();
                     activity2_end = activity2_End_Array.get(position);
                 }
 
             });
-        }*/
     }
+}
 
 
 //        List view
@@ -160,6 +147,11 @@ public class Activity2 extends AppCompatActivity {
                          getItem(position);
                     LayoutInflater inflater = LayoutInflater.from(getContext());
                     convertView = inflater.inflate(resource,parent,false);
+                    StopInformation endobj = getItem(position);
+
+                    endobj.getstopid();
+                    endobj.getshortname();
+                    endobj.getfullname();
 
                     start_listView=convertView.findViewById(R.id.List_Startdata);
                     end_listView=convertView.findViewById(R.id.List_Enddata);
