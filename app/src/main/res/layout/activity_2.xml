@@ -8,14 +8,14 @@
     tools:context=".Activity2">
 
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="170dp"
+        android:layout_width="match_parent"
+        android:layout_height="227dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        android:layout_marginEnd="11dp">
+        android:layout_marginEnd="0dp">
 
         <TextView
             android:id="@+id/Stopdata"
@@ -31,42 +31,42 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="211dp"
+        android:layout_height="166dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="520dp"
+        android:layout_marginTop="565dp"
         android:layout_marginEnd="0dp">
 
         <TextView
             android:id="@+id/Endstopdata"
-            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/Stopdata"
-            android:hint="Results Displayed here!!!"
+            android:clickable="true"
+
             android:padding="5dp"
             android:textSize="24sp" />
     </ScrollView>
 
     <ListView
         android:id="@+id/List_Enddata"
-        android:layout_width="137dp"
-        android:layout_height="374dp"
+        android:layout_width="wrap_content"
+        android:layout_height="268dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="260dp"
-        android:layout_marginTop="168dp" />
+        android:layout_marginStart="211dp"
+        android:layout_marginTop="239dp" />
 
     <ListView
         android:id="@+id/List_Startdata"
-        android:layout_width="142dp"
-        android:layout_height="407dp"
+        android:layout_width="wrap_content"
+        android:layout_height="272dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="170dp"
-        android:layout_marginEnd="269dp" />
+        android:layout_marginTop="237dp"
+        android:layout_marginEnd="229dp" />
 
     <Button
         android:id="@+id/BusNo"
@@ -74,21 +74,41 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="151dp"
-        android:layout_marginTop="333dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="518dp"
         android:text="Find Bus no" />
 
     <TextView
         android:id="@+id/commonroute"
-        android:layout_width="130dp"
-        android:layout_height="95dp"
+        android:layout_width="60dp"
+        android:layout_height="24dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
 
         android:layout_marginStart="144dp"
-        android:layout_marginBottom="237dp"
+        android:layout_marginBottom="307dp"
         android:padding="5dp"
         android:text="TextView"
         android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="211dp"
+        android:text="Starting Point" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="222dp"
+        android:layout_marginEnd="86dp"
+        android:text="Destination Point" />
 
 </RelativeLayout>

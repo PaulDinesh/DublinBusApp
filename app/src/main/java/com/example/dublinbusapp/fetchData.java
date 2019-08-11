@@ -48,7 +48,6 @@ public class fetchData extends AsyncTask<Void,Void,Void> {
 
 System.out.println("help......"+searchterm);
             URL url= new URL("https://data.smartdublin.ie/cgi-bin/rtpi/realtimebusinformation?stopid="+searchterm+"&format=json");
-            //URL url = new URL("https://api.myjson.com/bins/96k67");
             HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
             InputStream inputStream = httpsURLConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));

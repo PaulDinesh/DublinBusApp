@@ -28,8 +28,8 @@ public class Activity2 extends AppCompatActivity {
     public static TextView commonroute;
     public static ListView start_listView;
     public static ListView end_listView;
-    public static ArrayList<StopInformation> activity2_Start_Array;
-    public static ArrayList<StopInformation> activity2_End_Array;
+    public static ArrayList<StopInformation> activity2_Start_Array= new ArrayList<StopInformation>();
+    public static ArrayList<StopInformation> activity2_End_Array= new ArrayList<StopInformation>();;
     public static StopInformation activity2_start = new StopInformation();
     public static StopInformation activity2_end = new StopInformation();
 
